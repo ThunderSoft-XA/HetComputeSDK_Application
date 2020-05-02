@@ -1,0 +1,63 @@
+//============================================================================
+/// @file hetcompute_dsp.idl
+///
+                                                           //qidl copyright
+//% Copyright (c) 2012-2014 Qualcomm Technologies, Inc.
+                                                           //qidl nested=false
+//% All Rights Reserved.
+//% Qualcomm Confidential and Proprietary
+//============================================================================
+#include "AEEStdDef.idl"
+
+interface hetcompute_dsp {
+
+   long empty_kernel();
+
+   long empty_buffer(in sequence<long> vec);
+
+   long return_input(in long input);
+
+   long div_int(in long dividend, in long divisor, rout long quotient);
+
+   long sum(in sequence<long> vec, rout long long res);
+
+   long sum_float(in sequence<float> vec, rout float res);
+
+   long is_prime(in long n, rout long prime);
+
+   long inout_kernel(in sequence<long> vec, rout sequence<long> outvec);
+
+   long array_is_prime(in sequence<long> numbers, rout sequence<long> primes);
+
+   long fixed_work(in long n, rout long accu0, rout long accu1);
+
+   long increase_modulo_three(in long a, in long b, in long c, in sequence<long> invec, rout sequence<long> outvec);
+
+   long hex_pattern_test_1d(in long first_x, in long last_x,
+                            in sequence<long> input, rout sequence<long> output);
+
+   long hex_pattern_test_2d(in long first_x, in long last_x,
+                            in long first_y, in long last_y,
+                            in sequence<long> input, rout sequence<long> output);
+
+   long hex_pattern_test_3d(in long first_x, in long last_x,
+                            in long first_y, in long last_y,
+                            in long first_z, in long last_z,
+                            in sequence<long> input, rout sequence<long> output);
+    
+    long vadd(in long first, in long last, in sequence<float> avec, in sequence<float> bvec, rout sequence<float> cvec);
+
+    long constant_add(in long first, in long last, in sequence<float> avec, rout sequence<float> cvec);
+    
+    long vwrite(in long first, in long last, rout sequence<float> avec, in long val);
+    
+    long matmul(in long first_x, in long last_x, in long first_y, in long last_y, 
+                in sequence<float> avec, in sequence<float> bvec, rout sequence<float> cvec, 
+                in long M, in long N, in long P);
+
+    long math_cbrt(in long first, in long last, in sequence<float> a, rout sequence<float> b, in long sz);
+    long matrix_buffer(in sequence<long> matrixA, rout sequence<long> matrixB);
+    long compute_intensity_dist_weight_table(rout sequence<float> simTable);
+    long denoise_image_process(in sequence<char> input_buffer, rout sequence<float> output_buffer, in sequence<float> similarity_weights_buffer, 
+                               in long searchWindowSize, in long similarityWindowSize, in long imgWidth, in long imgHeight, in long width, in long height);
+};

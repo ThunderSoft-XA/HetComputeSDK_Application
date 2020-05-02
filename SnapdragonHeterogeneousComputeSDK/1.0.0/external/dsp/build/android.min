@@ -1,0 +1,34 @@
+ifeq ($(CDSP_FLAG), 1)
+	LIB_DSPRPC = libcdsprpc
+else ifeq ($(MDSP_FLAG), 1)
+	LIB_DSPRPC = libmdsprpc
+else ifeq ($(SLPI_FLAG), 1)
+	LIB_DSPRPC = libsdsprpc
+else
+	LIB_DSPRPC = libadsprpc
+endif
+
+$(info ************  LIB=$(LIB_DSPRPC) ************)
+
+# stub library
+BUILD_DLLS += libhetcompute_dsp
+libhetcompute_dsp_QAICIDLS += inc/hetcompute_dsp
+libhetcompute_dsp_C_SRCS += $V/hetcompute_dsp_stub
+libhetcompute_dsp_LD_FLAGS += -soname,libhetcompute_dsp.so
+libhetcompute_dsp_DLLS += $(LIB_DSPRPC)
+
+# stand-alone hetcompute_dsp executable
+BUILD_EXES+=hetcompute_dsp
+hetcompute_dsp_QAICIDLS += inc/hetcompute_dsp
+hetcompute_dsp_C_SRCS += src/hetcompute_dsp_main
+hetcompute_dsp_LIBS += rpcmem
+hetcompute_dsp_DLLS += libhetcompute_dsp $(LIB_DSPRPC)
+hetcompute_dsp_LD_FLAGS += -llog -ldl
+hetcompute_dsp_DEFINES += VERIFY_PRINT_ERROR
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;
